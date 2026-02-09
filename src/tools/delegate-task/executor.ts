@@ -615,7 +615,7 @@ export async function executeSyncTask(
 
     try {
       const allowTask = isPlanFamily(agentToUse)
-      await promptSyncWithModelSuggestionRetry(client, {
+      await promptWithModelSuggestionRetry(client, {
         path: { id: sessionID },
         body: {
           agent: agentToUse,
@@ -651,6 +651,47 @@ export async function executeSyncTask(
         agent: agentToUse,
         category: args.category,
       })
+    }
+
+    const timingCfg = getTimingConfig()
+    const pollStart = Date.now()
+    let lastMsgCount = 0
+    let stablePolls = 0
+
+    while (Date.now() - pollStart < timingCfg.MAX_POLL_TIME_MS) {
+      if (ctx.abort?.aborted) {
+        if (toastManager && taskId !== undefined) {
+          toastManager.removeTask(taskId)
+        }
+        subagentSessions.delete(sessionID)
+        return `Task aborted.\n\nSession ID: ${sessionID}`
+      }
+
+      await new Promise(resolve => setTimeout(resolve, timingCfg.POLL_INTERVAL_MS))
+
+      const statusResult = await client.session.status()
+      const allStatuses = (statusResult.data ?? {}) as Record<string, { type: string }>
+      const sessionStatus = allStatuses[sessionID]
+
+      if (sessionStatus && sessionStatus.type !== "idle") {
+        stablePolls = 0
+        lastMsgCount = 0
+        continue
+      }
+
+      if (Date.now() - pollStart < timingCfg.MIN_STABILITY_TIME_MS) continue
+
+      const messagesCheck = await client.session.messages({ path: { id: sessionID } })
+      const msgs = ((messagesCheck as { data?: unknown }).data ?? messagesCheck) as Array<unknown>
+      const currentMsgCount = msgs.length
+
+      if (currentMsgCount === lastMsgCount) {
+        stablePolls++
+        if (stablePolls >= timingCfg.STABILITY_POLLS_REQUIRED) break
+      } else {
+        stablePolls = 0
+        lastMsgCount = currentMsgCount
+      }
     }
 
     const messagesResult = await client.session.messages({
