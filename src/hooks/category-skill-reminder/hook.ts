@@ -1,19 +1,8 @@
 import type { PluginInput } from "@opencode-ai/plugin"
 import type { AvailableSkill } from "../../agents/dynamic-agent-prompt-builder"
-import { getSessionAgent } from "../../features/claude-code-session-state"
 import { log } from "../../shared"
-import { getAgentConfigKey } from "../../shared/agent-display-names"
+import { isOrchestratorAgent } from "../../shared/orchestrator-agents"
 import { buildReminderMessage } from "./formatter"
-
-/**
- * Target agents that should receive category+skill reminders.
- * These are orchestrator agents that delegate work to specialized agents.
- */
-const TARGET_AGENTS = new Set([
-  "sisyphus",
-  "sisyphus-junior",
-  "atlas",
-])
 
 /**
  * Tools that indicate the agent is doing work that could potentially be delegated.
@@ -73,22 +62,11 @@ export function createCategorySkillReminderHook(
     return sessionStates.get(sessionID)!
   }
 
-  function isTargetAgent(sessionID: string, inputAgent?: string): boolean {
-    const agent = getSessionAgent(sessionID) ?? inputAgent
-    if (!agent) return false
-    const agentKey = getAgentConfigKey(agent)
-    return (
-      TARGET_AGENTS.has(agentKey) ||
-      agentKey.includes("sisyphus") ||
-      agentKey.includes("atlas")
-    )
-  }
-
   const toolExecuteAfter = async (input: ToolExecuteInput, output: ToolExecuteOutput) => {
     const { tool, sessionID } = input
     const toolLower = tool.toLowerCase()
 
-    if (!isTargetAgent(sessionID, input.agent)) {
+    if (!isOrchestratorAgent(sessionID, input.agent)) {
       return
     }
 

@@ -6,8 +6,7 @@ import {
 } from "./storage";
 import { TARGET_TOOLS, AGENT_TOOLS, REMINDER_MESSAGE } from "./constants";
 import type { AgentUsageState } from "./types";
-import { getSessionAgent } from "../../features/claude-code-session-state";
-import { getAgentConfigKey } from "../../shared/agent-display-names";
+import { isOrchestratorAgent } from "../../shared/orchestrator-agents";
 
 interface ToolExecuteInput {
   tool: string;
@@ -26,23 +25,6 @@ interface EventInput {
     type: string;
     properties?: unknown;
   };
-}
-
-/**
- * Only orchestrator agents should receive usage reminders.
- * Subagents (explore, librarian, oracle, etc.) are the targets of delegation,
- * so reminding them to delegate to themselves is counterproductive.
- */
-const ORCHESTRATOR_AGENTS = new Set([
-  "sisyphus",
-  "sisyphus-junior",
-  "atlas",
-  "hephaestus",
-  "prometheus",
-]);
-
-function isOrchestratorAgent(agentName: string): boolean {
-  return ORCHESTRATOR_AGENTS.has(getAgentConfigKey(agentName));
 }
 
 export function createAgentUsageReminderHook(_ctx: PluginInput) {
@@ -80,8 +62,7 @@ export function createAgentUsageReminderHook(_ctx: PluginInput) {
   ) => {
     const { tool, sessionID } = input;
 
-    const agent = getSessionAgent(sessionID);
-    if (agent && !isOrchestratorAgent(agent)) {
+    if (!isOrchestratorAgent(sessionID)) {
       return;
     }
 
