@@ -324,7 +324,7 @@ describe("generateOmoConfig - model fallback system", () => {
     // #then Oracle should use native OpenAI (first fallback entry)
     expect((result.agents as Record<string, { model: string }>).oracle.model).toBe("openai/gpt-5.2")
     // #then multimodal-looker should use native OpenAI (fallback within native tier)
-    expect((result.agents as Record<string, { model: string }>)["multimodal-looker"].model).toBe("openai/gpt-5.2")
+    expect((result.agents as Record<string, { model: string }>)["multimodal-looker"].model).toBe("openai/gpt-5.3-codex")
   })
 
   test("uses haiku for explore when Claude max20", () => {

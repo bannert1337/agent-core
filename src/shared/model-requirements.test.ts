@@ -86,19 +86,23 @@ describe("AGENT_MODEL_REQUIREMENTS", () => {
     expect(quaternary.model).toBe("gpt-5-nano")
   })
 
-  test("multimodal-looker has valid fallbackChain with kimi-k2.5-free as primary", () => {
+  test("multimodal-looker has valid fallbackChain with gpt-5.3-codex as primary", () => {
     // given - multimodal-looker agent requirement
     const multimodalLooker = AGENT_MODEL_REQUIREMENTS["multimodal-looker"]
 
     // when - accessing multimodal-looker requirement
-    // then - fallbackChain exists with kimi-k2.5-free first, gpt-5-nano last
+    // then - fallbackChain exists with gpt-5.3-codex first, gemini second, gpt-5-nano last
     expect(multimodalLooker).toBeDefined()
     expect(multimodalLooker.fallbackChain).toBeArray()
     expect(multimodalLooker.fallbackChain).toHaveLength(5)
 
     const primary = multimodalLooker.fallbackChain[0]
-    expect(primary.providers[0]).toBe("opencode")
-    expect(primary.model).toBe("kimi-k2.5-free")
+    expect(primary.providers).toEqual(["openai", "opencode"])
+    expect(primary.model).toBe("gpt-5.3-codex")
+    expect(primary.variant).toBe("medium")
+
+    const secondary = multimodalLooker.fallbackChain[1]
+    expect(secondary.model).toBe("gemini-3-flash")
 
     const last = multimodalLooker.fallbackChain[4]
     expect(last.providers).toEqual(["openai", "github-copilot", "opencode"])
