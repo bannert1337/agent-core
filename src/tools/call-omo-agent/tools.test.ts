@@ -4,12 +4,14 @@ import type { BackgroundManager } from "../../features/background-agent"
 import { createCallOmoAgent } from "./tools"
 
 describe("createCallOmoAgent", () => {
+  const assertCanSpawnMock = mock(() => Promise.resolve(undefined))
   const mockCtx = {
     client: {},
     directory: "/test",
   } as unknown as PluginInput
 
   const mockBackgroundManager = {
+    assertCanSpawn: assertCanSpawnMock,
     launch: mock(() => Promise.resolve({
       id: "test-task-id",
       sessionID: null,
@@ -98,5 +100,26 @@ describe("createCallOmoAgent", () => {
 
     //#then
     expect(result).not.toContain("disabled via disabled_agents")
+  })
+
+  test("should return a tool error when sync spawn depth validation fails", async () => {
+    //#given
+    assertCanSpawnMock.mockRejectedValueOnce(new Error("Subagent spawn blocked: child depth 4 exceeds background_task.maxDepth=3."))
+    const toolDef = createCallOmoAgent(mockCtx, mockBackgroundManager, [])
+    const executeFunc = toolDef.execute as Function
+
+    //#when
+    const result = await executeFunc(
+      {
+        description: "Test",
+        prompt: "Test prompt",
+        subagent_type: "explore",
+        run_in_background: false,
+      },
+      { sessionID: "test", messageID: "msg", agent: "test", abort: new AbortController().signal },
+    )
+
+    //#then
+    expect(result).toContain("background_task.maxDepth=3")
   })
 })
