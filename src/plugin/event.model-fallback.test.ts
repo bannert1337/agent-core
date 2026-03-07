@@ -6,7 +6,7 @@ import { _resetForTesting, setMainSession } from "../features/claude-code-sessio
 import { createModelFallbackHook, clearPendingModelFallback } from "../hooks/model-fallback/hook"
 
 describe("createEventHandler - model fallback", () => {
-  const createHandler = (args?: { hooks?: any }) => {
+  const createHandler = (args?: { hooks?: any; pluginConfig?: any }) => {
     const abortCalls: string[] = []
     const promptCalls: string[] = []
 
@@ -26,7 +26,7 @@ describe("createEventHandler - model fallback", () => {
           },
         },
       } as any,
-      pluginConfig: {} as any,
+      pluginConfig: (args?.pluginConfig ?? {}) as any,
       firstMessageVariantGate: {
         markSessionCreated: () => {},
         clear: () => {},
@@ -211,6 +211,121 @@ describe("createEventHandler - model fallback", () => {
       modelID: "claude-opus-4-6",
     })
     expect(output.message["variant"]).toBe("max")
+  })
+
+  test("deduplicates session.status countdown updates for the same retry attempt", async () => {
+    //#given
+    const sessionID = "ses_status_retry_dedup"
+    setMainSession(sessionID)
+    clearPendingModelFallback(sessionID)
+    const modelFallback = createModelFallbackHook()
+    const { handler, abortCalls, promptCalls } = createHandler({ hooks: { modelFallback } })
+
+    await handler({
+      event: {
+        type: "message.updated",
+        properties: {
+          info: {
+            id: "msg_user_status_dedup",
+            sessionID,
+            role: "user",
+            modelID: "claude-opus-4-6-thinking",
+            providerID: "anthropic",
+            agent: "Sisyphus (Ultraworker)",
+          },
+        },
+      },
+    })
+
+    //#when
+    await handler({
+      event: {
+        type: "session.status",
+        properties: {
+          sessionID,
+          status: {
+            type: "retry",
+            attempt: 1,
+            message:
+              "Bad Gateway: {\"error\":{\"message\":\"unknown provider for model claude-opus-4-6-thinking\"}} [retrying in 27s attempt #1]",
+            next: 27,
+          },
+        },
+      },
+    })
+
+    await handler({
+      event: {
+        type: "session.status",
+        properties: {
+          sessionID,
+          status: {
+            type: "retry",
+            attempt: 1,
+            message:
+              "Bad Gateway: {\"error\":{\"message\":\"unknown provider for model claude-opus-4-6-thinking\"}} [retrying in 26s attempt #1]",
+            next: 26,
+          },
+        },
+      },
+    })
+
+    //#then
+    expect(abortCalls).toEqual([sessionID])
+    expect(promptCalls).toEqual([sessionID])
+  })
+
+  test("does not trigger model fallback from session.status when runtime fallback is enabled", async () => {
+    //#given
+    const sessionID = "ses_status_retry_runtime_enabled"
+    setMainSession(sessionID)
+    clearPendingModelFallback(sessionID)
+    const modelFallback = createModelFallbackHook()
+    const runtimeFallback = {
+      event: async () => {},
+      "chat.message": async () => {},
+    }
+    const { handler, abortCalls, promptCalls } = createHandler({
+      hooks: { modelFallback, runtimeFallback },
+      pluginConfig: { runtime_fallback: { enabled: true } },
+    })
+
+    await handler({
+      event: {
+        type: "message.updated",
+        properties: {
+          info: {
+            id: "msg_user_status_runtime_enabled",
+            sessionID,
+            role: "user",
+            modelID: "claude-opus-4-6-thinking",
+            providerID: "anthropic",
+            agent: "Sisyphus (Ultraworker)",
+          },
+        },
+      },
+    })
+
+    //#when
+    await handler({
+      event: {
+        type: "session.status",
+        properties: {
+          sessionID,
+          status: {
+            type: "retry",
+            attempt: 1,
+            message:
+              "Bad Gateway: {\"error\":{\"message\":\"unknown provider for model claude-opus-4-6-thinking\"}} [retrying in 27s attempt #1]",
+            next: 27,
+          },
+        },
+      },
+    })
+
+    //#then
+    expect(abortCalls).toEqual([])
+    expect(promptCalls).toEqual([])
   })
 
   test("advances main-session fallback chain across repeated session.error retries end-to-end", async () => {
