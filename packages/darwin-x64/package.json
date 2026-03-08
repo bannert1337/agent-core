@@ -1,11 +1,11 @@
 {
-  "name": "oh-my-opencode-darwin-x64",
+  "name": "agent-core-darwin-x64",
   "version": "3.11.0",
-  "description": "Platform-specific binary for oh-my-opencode (darwin-x64)",
+  "description": "Platform-specific binary for agent-core (darwin-x64)",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/code-yeongyu/oh-my-openagent"
+    "url": "git+https://github.com/bannert1337/agent-core.git"
   },
   "os": [
     "darwin"
@@ -17,6 +17,6 @@
     "bin"
   ],
   "bin": {
-    "oh-my-opencode": "./bin/oh-my-opencode"
+    "agent-core": "./bin/oh-my-opencode"
   }
 }
