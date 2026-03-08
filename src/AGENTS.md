@@ -21,8 +21,8 @@ Entry point `index.ts` orchestrates 5-step initialization: loadConfig → create
 
 ```
 loadPluginConfig(directory, ctx)
-  1. User: ~/.config/opencode/oh-my-opencode.jsonc
-  2. Project: .opencode/oh-my-opencode.jsonc
+  1. User: ~/.config/opencode/agent-core.jsonc
+  2. Project: .opencode/agent-core.jsonc
   3. mergeConfigs(user, project) → deepMerge for agents/categories, Set union for disabled_*
   4. Zod safeParse → defaults for omitted fields
   5. migrateConfigFile() → legacy key transformation

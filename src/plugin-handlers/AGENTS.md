@@ -47,9 +47,9 @@
 ## MULTI-LEVEL CONFIG MERGE
 
 ```
-User (~/.config/opencode/oh-my-opencode.jsonc)
+User (~/.config/opencode/agent-core.jsonc)
   ↓ deepMerge
-Project (.opencode/oh-my-opencode.jsonc)
+Project (.opencode/agent-core.jsonc)
   ↓ Zod defaults
 Final Config
 ```

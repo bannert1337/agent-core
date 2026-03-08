@@ -1,15 +1,15 @@
-# oh-my-opencode — O P E N C O D E Plugin
+# agent-core — O P E N C O D E Plugin
 
 **Generated:** 2026-03-06 | **Commit:** 7fe44024 | **Branch:** dev
 
 ## OVERVIEW
 
-OpenCode plugin (npm: `oh-my-opencode`) that extends Claude Code (OpenCode fork) with multi-agent orchestration, 46 lifecycle hooks, 26 tools, skill/command/MCP systems, and Claude Code compatibility. 1268 TypeScript files, 160k LOC.
+OpenCode plugin (npm: `agent-core`) that extends Claude Code (OpenCode fork) with multi-agent orchestration, 46 lifecycle hooks, 26 tools, skill/command/MCP systems, and Claude Code compatibility. 1268 TypeScript files, 160k LOC.
 
 ## STRUCTURE
 
 ```
-oh-my-opencode/
+agent-core/
 ├── src/
 │   ├── index.ts              # Plugin entry: loadConfig → createManagers → createTools → createHooks → createPluginInterface
 │   ├── plugin-config.ts      # JSONC multi-level config: user → project → defaults (Zod v4)
@@ -71,7 +71,7 @@ OhMyOpenCodePlugin(ctx)
 ## MULTI-LEVEL CONFIG
 
 ```
-Project (.opencode/oh-my-opencode.jsonc)  →  User (~/.config/opencode/oh-my-opencode.jsonc)  →  Defaults
+Project (.opencode/agent-core.jsonc)  →  User (~/.config/opencode/agent-core.jsonc)  →  Defaults
 ```
 
 - `agents`, `categories`, `claude_code`: deep merged recursively
@@ -128,9 +128,9 @@ bun test                    # Bun test suite
 bun run build              # Build plugin (ESM + declarations + schema)
 bun run build:all          # Build + platform binaries
 bun run typecheck           # tsc --noEmit
-bunx oh-my-opencode install # Interactive setup
-bunx oh-my-opencode doctor  # Health diagnostics
-bunx oh-my-opencode run     # Non-interactive session
+bunx agent-core install # Interactive setup
+bunx agent-core doctor  # Health diagnostics
+bunx agent-core run     # Non-interactive session
 ```
 
 ## CI/CD
@@ -146,7 +146,7 @@ bunx oh-my-opencode run     # Non-interactive session
 
 ## NOTES
 
-- Logger writes to `/tmp/oh-my-opencode.log` — check there for debugging
+- Logger writes to `/tmp/agent-core.log` — check there for debugging
 - Background tasks: 5 concurrent per model/provider (configurable)
 - Plugin load timeout: 10s for Claude Code plugins
 - Model fallback priority: Claude > OpenAI > Gemini > Copilot > OpenCode Zen > Z.ai > Kimi
