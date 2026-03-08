@@ -42,7 +42,7 @@
     "llm"
   ],
   "author": "YeonGyu-Kim",
-  "license": "SUL-1.0",
+  "license": "AGPL-3.0",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/code-yeongyu/oh-my-openagent.git"
