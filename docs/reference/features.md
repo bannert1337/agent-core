@@ -1,8 +1,8 @@
-# Oh-My-OpenCode Features Reference
+# Agent Core Features Reference
 
 ## Agents
 
-Oh-My-OpenCode provides 11 specialized AI agents. Each has distinct expertise, optimized models, and tool permissions.
+Agent Core provides 11 specialized AI agents. Each has distinct expertise, optimized models, and tool permissions.
 
 ### Core Agents
 
@@ -44,11 +44,11 @@ Ask @explore for the policy on this feature
 
 | Agent             | Restrictions                                                                            |
 | ----------------- | --------------------------------------------------------------------------------------- |
-| oracle            | Read-only: cannot write, edit, or delegate (blocked: write, edit, task, call_omo_agent) |
-| librarian         | Cannot write, edit, or delegate (blocked: write, edit, task, call_omo_agent)            |
-| explore           | Cannot write, edit, or delegate (blocked: write, edit, task, call_omo_agent)            |
+| oracle            | Read-only: cannot write, edit, or delegate (blocked: write, edit, task, call_agent_core_agent) |
+| librarian         | Cannot write, edit, or delegate (blocked: write, edit, task, call_agent_core_agent)            |
+| explore           | Cannot write, edit, or delegate (blocked: write, edit, task, call_agent_core_agent)            |
 | multimodal-looker | Allowlist: `read` only                                                                  |
-| atlas             | Cannot delegate (blocked: task, call_omo_agent)                                         |
+| atlas             | Cannot delegate (blocked: task, call_agent_core_agent)                                         |
 | momus             | Cannot write, edit, or delegate (blocked: write, edit, task)                            |
 
 ### Background Agents
@@ -90,7 +90,7 @@ When running inside tmux:
 - Each pane shows agent output live
 - Auto-cleanup when agents complete
 
-Customize agent models, prompts, and permissions in `oh-my-opencode.json`.
+Customize agent models, prompts, and permissions in `agent-core.json`.
 
 ## Category System
 
@@ -129,7 +129,7 @@ task({
 
 ### Custom Categories
 
-You can define custom categories in `oh-my-opencode.json`.
+You can define custom categories in `agent-core.json`.
 
 #### Category Configuration Schema
 
@@ -237,7 +237,7 @@ Skills provide specialized workflows with embedded MCP servers and detailed inst
 
 ### Browser Automation Options
 
-Oh-My-OpenCode provides two browser automation providers, configurable via `browser_automation_engine.provider`.
+Agent Core provides two browser automation providers, configurable via `browser_automation_engine.provider`.
 
 #### Option 1: Playwright MCP (Default)
 
@@ -476,8 +476,8 @@ Generates a structured handoff document capturing the current state, what was do
 
 Load custom commands from:
 
-- `.opencode/command/*.md` (project, OpenCode native)
-- `~/.config/opencode/command/*.md` (user, OpenCode native)
+- `.opencode/command/*.md` (project, Agent Core native)
+- `~/.config/opencode/command/*.md` (user, Agent Core native)
 - `.claude/commands/*.md` (project, Claude Code compat)
 - `~/.config/opencode/commands/*.md` (user, Claude Code compat)
 
@@ -518,7 +518,7 @@ Load custom commands from:
 
 | Tool                  | Description                                                                                                                                                                                                                             |
 | --------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **call_omo_agent**    | Spawn explore/librarian agents. Supports `run_in_background`.                                                                                                                                                                           |
+| **call_agent_core_agent** | Spawn explore/librarian agents. Supports `run_in_background`.                                                                                                                                                                           |
 | **task**              | Category-based task delegation. Supports built-in categories like `visual-engineering`, `ultrabrain`, `deep`, `artistry`, `quick`, `unspecified-low`, `unspecified-high`, and `writing`, or direct agent targeting via `subagent_type`. |
 | **background_output** | Retrieve background task results                                                                                                                                                                                                        |
 | **background_cancel** | Cancel running background tasks                                                                                                                                                                                                         |
@@ -558,7 +558,7 @@ Requires `experimental.task_system: true` in config.
 
 #### Task System Details
 
-**Note on Claude Code Alignment**: This implementation follows Claude Code's internal Task tool signatures (`TaskCreate`, `TaskUpdate`, `TaskList`, `TaskGet`) and field naming conventions (`subject`, `blockedBy`, `blocks`, etc.). However, Anthropic has not published official documentation for these tools. This is Oh My OpenCode's own implementation based on observed Claude Code behavior and internal specifications.
+**Note on Claude Code Alignment**: This implementation follows Claude Code's internal Task tool signatures (`TaskCreate`, `TaskUpdate`, `TaskList`, `TaskGet`) and field naming conventions (`subject`, `blockedBy`, `blocks`, etc.). However, Anthropic has not published official documentation for these tools. This is Agent Core's own implementation based on observed Claude Code behavior and internal specifications.
 
 **Task Schema**:
 
@@ -844,7 +844,7 @@ When a skill MCP has `oauth` configured:
 Pre-authenticate via CLI:
 
 ```bash
-bunx oh-my-opencode mcp oauth login <server-name> --server-url https://api.example.com
+bunx agent-core mcp oauth login <server-name> --server-url https://api.example.com
 ```
 
 ## Context Injection

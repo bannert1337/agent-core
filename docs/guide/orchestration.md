@@ -1,6 +1,6 @@
 # Orchestration System Guide
 
-Oh My OpenCode's orchestration system transforms a simple AI agent into a coordinated development team through **separation of planning and execution**.
+Agent Core's orchestration system transforms a simple AI agent into a coordinated development team through **separation of planning and execution**.
 
 ---
 
@@ -475,7 +475,7 @@ Use the `ulw` keyword in Sisyphus when:
 
 ## Configuration
 
-You can control related features in `oh-my-opencode.json`:
+You can control related features in `agent-core.json`:
 
 ```jsonc
 {

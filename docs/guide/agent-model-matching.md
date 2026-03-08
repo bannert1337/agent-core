@@ -8,7 +8,7 @@ Think of AI models as developers on a team. Each has a different brain, differen
 
 This isn't a bug. It's the foundation of the entire system.
 
-Oh My OpenCode assigns each agent a model that matches its _working style_ — like building a team where each person is in the role that fits their personality.
+Agent Core assigns each agent a model that matches its _working style_ — like building a team where each person is in the role that fits their personality.
 
 ### Sisyphus: The Sociable Lead
 
@@ -136,7 +136,7 @@ Principle-driven, explicit reasoning, deep technical capability. Best for agents
 
 You may see model names like `kimi-k2.5-free`, `minimax-m2.5-free`, or `big-pickle` (GLM 4.6) in the source code or logs. These are free-tier versions of the same model families, served through the OpenCode Zen provider. They exist as lower-priority entries in fallback chains.
 
-You don't need to configure them. The system includes them so it degrades gracefully when you don't have every paid subscription. If you have the paid version, the paid version is always preferred.
+You don't need to configure them. The system includes them so it degrades gracefully when you don't have every paid provider. If you have the paid version, the paid version is always preferred.
 
 ---
 
@@ -165,7 +165,7 @@ See the [Orchestration System Guide](./orchestration.md) for how agents dispatch
 
 ```jsonc
 {
-  "$schema": "https://raw.githubusercontent.com/code-yeongyu/oh-my-opencode/dev/assets/oh-my-opencode.schema.json",
+  "$schema": "https://raw.githubusercontent.com/agent-core/agent-core/dev/assets/agent-core.schema.json",
 
   "agents": {
     // Main orchestrator: Claude Opus or Kimi K2.5 work best
