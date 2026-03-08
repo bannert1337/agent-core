@@ -529,4 +529,3 @@ Type `exit` or start a new session. Atlas is primarily entered via `/start-work`
 - [Overview](./overview.md)
 - [Features Reference](../reference/features.md)
 - [Configuration Reference](../reference/configuration.md)
-- [Manifesto](../manifesto.md)

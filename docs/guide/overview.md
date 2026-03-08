@@ -267,7 +267,6 @@ Claude Code doesn't have this. It takes your prompt and runs. Oh My OpenCode thi
 - **[Agent-Model Matching Guide](./agent-model-matching.md)** — Which models work best for each agent and how to customize
 - **[Configuration Reference](../reference/configuration.md)** — Full config options with examples
 - **[Features Reference](../reference/features.md)** — Complete feature documentation
-- **[Manifesto](../manifesto.md)** — Philosophy behind the project
 
 ---
 

@@ -245,7 +245,6 @@ See [Configuration Documentation](docs/reference/configuration.md).
 
 ## Author's Note
 
-**Want the philosophy?** Read the [Ultrawork Manifesto](docs/manifesto.md).
 
 ---
 

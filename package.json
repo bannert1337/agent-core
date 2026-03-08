@@ -1,12 +1,12 @@
 {
-  "name": "oh-my-opencode",
+  "name": "agent-core",
   "version": "3.11.0",
-  "description": "The Best AI Agent Harness - Batteries-Included OpenCode Plugin with Multi-Model Orchestration, Parallel Background Agents, and Crafted LSP/AST Tools",
+  "description": "AI Agent Harness with Multi-Model Orchestration, Parallel Background Agents, and LSP/AST Tools",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "type": "module",
   "bin": {
-    "oh-my-opencode": "bin/oh-my-opencode.js"
+    "agent-core": "bin/oh-my-opencode.js"
   },
   "files": [
     "dist",
@@ -18,7 +18,7 @@
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
     },
-    "./schema.json": "./dist/oh-my-opencode.schema.json"
+    "./schema.json": "./dist/agent-core.schema.json"
   },
   "scripts": {
     "build": "bun build src/index.ts --outdir dist --target bun --format esm --external @ast-grep/napi && tsc --emitDeclarationOnly && bun build src/cli/index.ts --outdir dist/cli --target bun --format esm --external @ast-grep/napi && bun run build:schema",
@@ -45,12 +45,12 @@
   "license": "AGPL-3.0",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/code-yeongyu/oh-my-openagent.git"
+    "url": "git+https://github.com/bannert1337/agent-core.git"
   },
   "bugs": {
-    "url": "https://github.com/code-yeongyu/oh-my-openagent/issues"
+    "url": "https://github.com/bannert1337/agent-core/issues"
   },
-  "homepage": "https://github.com/code-yeongyu/oh-my-openagent#readme",
+  "homepage": "https://github.com/bannert1337/agent-core#readme",
   "dependencies": {
     "@ast-grep/cli": "^0.40.0",
     "@ast-grep/napi": "^0.40.0",
@@ -76,17 +76,17 @@
     "typescript": "^5.7.3"
   },
   "optionalDependencies": {
-    "oh-my-opencode-darwin-arm64": "3.11.0",
-    "oh-my-opencode-darwin-x64": "3.11.0",
-    "oh-my-opencode-darwin-x64-baseline": "3.11.0",
-    "oh-my-opencode-linux-arm64": "3.11.0",
-    "oh-my-opencode-linux-arm64-musl": "3.11.0",
-    "oh-my-opencode-linux-x64": "3.11.0",
-    "oh-my-opencode-linux-x64-baseline": "3.11.0",
-    "oh-my-opencode-linux-x64-musl": "3.11.0",
-    "oh-my-opencode-linux-x64-musl-baseline": "3.11.0",
-    "oh-my-opencode-windows-x64": "3.11.0",
-    "oh-my-opencode-windows-x64-baseline": "3.11.0"
+    "agent-core-darwin-arm64": "3.11.0",
+    "agent-core-darwin-x64": "3.11.0",
+    "agent-core-darwin-x64-baseline": "3.11.0",
+    "agent-core-linux-arm64": "3.11.0",
+    "agent-core-linux-arm64-musl": "3.11.0",
+    "agent-core-linux-x64": "3.11.0",
+    "agent-core-linux-x64-baseline": "3.11.0",
+    "agent-core-linux-x64-musl": "3.11.0",
+    "agent-core-linux-x64-musl-baseline": "3.11.0",
+    "agent-core-windows-x64": "3.11.0",
+    "agent-core-windows-x64-baseline": "3.11.0"
   },
   "overrides": {
     "@opencode-ai/sdk": "^1.2.17"
