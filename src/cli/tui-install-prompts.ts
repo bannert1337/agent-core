@@ -30,10 +30,10 @@ export async function promptInstallConfig(detected: DetectedConfig): Promise<Ins
   const initial = detectedToInitialValues(detected)
 
   const claude = await selectOrCancel<ClaudeSubscription>({
-    message: "Do you have a Claude Pro/Max subscription?",
+    message: "Enable Claude provider?",
     options: [
       { value: "no", label: "No", hint: "Will use opencode/big-pickle as fallback" },
-      { value: "yes", label: "Yes (standard)", hint: "Claude Opus 4.5 for orchestration" },
+      { value: "yes", label: "Yes", hint: "Claude Opus 4.5 for orchestration" },
       { value: "max20", label: "Yes (max20 mode)", hint: "Full power with Claude Sonnet 4.6 for Librarian" },
     ],
     initialValue: initial.claude,
@@ -41,7 +41,7 @@ export async function promptInstallConfig(detected: DetectedConfig): Promise<Ins
   if (!claude) return null
 
   const openai = await selectOrCancel({
-    message: "Do you have an OpenAI/ChatGPT Plus subscription?",
+    message: "Enable OpenAI provider?",
     options: [
       { value: "no", label: "No", hint: "Oracle will use fallback models" },
       { value: "yes", label: "Yes", hint: "GPT-5.4 for Oracle (high-IQ debugging)" },
@@ -61,7 +61,7 @@ export async function promptInstallConfig(detected: DetectedConfig): Promise<Ins
   if (!gemini) return null
 
   const copilot = await selectOrCancel({
-    message: "Do you have a GitHub Copilot subscription?",
+    message: "Enable GitHub Copilot provider?",
     options: [
       { value: "no", label: "No", hint: "Only native providers will be used" },
       { value: "yes", label: "Yes", hint: "Fallback option when native providers unavailable" },
@@ -81,7 +81,7 @@ export async function promptInstallConfig(detected: DetectedConfig): Promise<Ins
   if (!opencodeZen) return null
 
   const zaiCodingPlan = await selectOrCancel({
-    message: "Do you have a Z.ai Coding Plan subscription?",
+    message: "Enable Z.ai provider?",
     options: [
       { value: "no", label: "No", hint: "Will use other configured providers" },
       { value: "yes", label: "Yes", hint: "Fallback for Librarian and Multimodal Looker" },
@@ -91,7 +91,7 @@ export async function promptInstallConfig(detected: DetectedConfig): Promise<Ins
   if (!zaiCodingPlan) return null
 
   const kimiForCoding = await selectOrCancel({
-    message: "Do you have a Kimi For Coding subscription?",
+    message: "Enable Kimi provider?",
     options: [
       { value: "no", label: "No", hint: "Will use other configured providers" },
       { value: "yes", label: "Yes", hint: "Kimi K2.5 for Sisyphus/Prometheus fallback" },

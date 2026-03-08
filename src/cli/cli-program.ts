@@ -24,13 +24,13 @@ program
   .command("install")
   .description("Install and configure oh-my-opencode with interactive setup")
   .option("--no-tui", "Run in non-interactive mode (requires all options)")
-  .option("--claude <value>", "Claude subscription: no, yes, max20")
-  .option("--openai <value>", "OpenAI/ChatGPT subscription: no, yes (default: no)")
+  .option("--claude <value>", "Enable Claude provider: no, yes, max20")
+  .option("--openai <value>", "Enable OpenAI provider: no, yes (default: no)")
   .option("--gemini <value>", "Gemini integration: no, yes")
-  .option("--copilot <value>", "GitHub Copilot subscription: no, yes")
+  .option("--copilot <value>", "Enable GitHub Copilot provider: no, yes")
   .option("--opencode-zen <value>", "OpenCode Zen access: no, yes (default: no)")
-  .option("--zai-coding-plan <value>", "Z.ai Coding Plan subscription: no, yes (default: no)")
-  .option("--kimi-for-coding <value>", "Kimi For Coding subscription: no, yes (default: no)")
+  .option("--zai-coding-plan <value>", "Enable Z.ai provider: no, yes (default: no)")
+  .option("--kimi-for-coding <value>", "Enable Kimi provider: no, yes (default: no)")
   .option("--skip-auth", "Skip authentication setup hints")
   .addHelpText("after", `
 Examples:
