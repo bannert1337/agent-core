@@ -1,5 +1,6 @@
 import * as path from "node:path"
 import * as os from "node:os"
+import { existsSync } from "node:fs"
 
 /**
  * Returns the user-level data directory.
@@ -31,11 +32,28 @@ export function getCacheDir(): string {
 }
 
 /**
- * Returns the oh-my-opencode cache directory.
- * All platforms: ~/.cache/oh-my-opencode
+ * Returns the agent-core cache directory.
+ * All platforms: ~/.cache/agent-core
  */
-export function getOmoOpenCodeCacheDir(): string {
-  return path.join(getCacheDir(), "oh-my-opencode")
+export function getAgentCoreCacheDir(): string {
+  return path.join(getCacheDir(), "agent-core")
+}
+
+/**
+ * Returns the cache directory with backward-compatible fallback.
+ * Prefers agent-core, falls back to oh-my-opencode if it exists.
+ * All platforms: ~/.cache/agent-core (or ~/.cache/oh-my-opencode if legacy exists)
+ */
+export function getCacheDirWithFallback(): string {
+  const agentCoreDir = getAgentCoreCacheDir()
+  const legacyDir = path.join(getCacheDir(), "oh-my-opencode")
+  
+  // If legacy directory exists and new one doesn't, use legacy
+  if (existsSync(legacyDir) && !existsSync(agentCoreDir)) {
+    return legacyDir
+  }
+  
+  return agentCoreDir
 }
 
 /**
@@ -45,3 +63,6 @@ export function getOmoOpenCodeCacheDir(): string {
 export function getOpenCodeCacheDir(): string {
   return path.join(getCacheDir(), "opencode")
 }
+
+// Backward compatibility - keep old function name as alias
+export { getCacheDirWithFallback as getOmoOpenCodeCacheDir }

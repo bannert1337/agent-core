@@ -102,7 +102,7 @@ export function getOpenCodeConfigPaths(options: OpenCodeConfigDirOptions): OpenC
     configJson: join(configDir, "opencode.json"),
     configJsonc: join(configDir, "opencode.jsonc"),
     packageJson: join(configDir, "package.json"),
-    omoConfig: join(configDir, "oh-my-opencode.json"),
+    omoConfig: existsSync(join(configDir, "agent-core.jsonc")) ? join(configDir, "agent-core.jsonc") : join(configDir, "oh-my-opencode.jsonc"),
   }
 }
 
