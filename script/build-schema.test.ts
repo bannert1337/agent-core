@@ -11,7 +11,7 @@ describe("build-schema-document", () => {
 
     // then
     expect(schema.$schema).toBe(expectedDraft)
-    expect(schema.title).toBe("Oh My OpenCode Configuration")
+    expect(schema.title).toBe("Agent Core Configuration")
     expect(schema.properties).toBeDefined()
     expect(schema.properties.skills).toBeDefined()
   })

@@ -121,7 +121,7 @@ jobs:
   publish-main:
     runs-on: ubuntu-latest
     needs: [test, typecheck]
-    if: github.repository == 'code-yeongyu/oh-my-openagent'
+    if: github.repository == 'bannert1337/agent-core'
     outputs:
       version: ${{ steps.version.outputs.version }}
       dist_tag: ${{ steps.version.outputs.dist_tag }}
@@ -151,7 +151,7 @@ jobs:
         run: |
           VERSION="${{ inputs.version }}"
           if [ -z "$VERSION" ]; then
-            PREV=$(curl -s https://registry.npmjs.org/oh-my-opencode/latest | jq -r '.version // "0.0.0"')
+            PREV=$(curl -s https://registry.npmjs.org/agent-core/latest | jq -r '.version // "0.0.0"')
             BASE="${PREV%%-*}"
             IFS='.' read -r MAJOR MINOR PATCH <<< "$BASE"
             case "${{ inputs.bump }}" in
@@ -175,10 +175,10 @@ jobs:
         id: check
         run: |
           VERSION="${{ steps.version.outputs.version }}"
-          STATUS=$(curl -s -o /dev/null -w "%{http_code}" "https://registry.npmjs.org/oh-my-opencode/${VERSION}")
+          STATUS=$(curl -s -o /dev/null -w "%{http_code}" "https://registry.npmjs.org/agent-core/${VERSION}")
           if [ "$STATUS" = "200" ]; then
             echo "skip=true" >> $GITHUB_OUTPUT
-            echo "✓ oh-my-opencode@${VERSION} already published"
+            echo "✓ agent-core@${VERSION} already published"
           else
             echo "skip=false" >> $GITHUB_OUTPUT
           fi
@@ -204,7 +204,7 @@ jobs:
           bunx tsc --emitDeclarationOnly
           bun run build:schema
 
-      - name: Publish oh-my-opencode
+      - name: Publish agent-core
         if: steps.check.outputs.skip != 'true'
         run: |
           TAG_ARG=""
@@ -215,32 +215,32 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}
           NPM_CONFIG_PROVENANCE: true
-      - name: Publish oh-my-openagent
+      - name: Publish agent-core (legacy)
         if: steps.check.outputs.skip != 'true'
         run: |
-          # Update package name to oh-my-openagent
-          jq '.name = "oh-my-openagent"' package.json > tmp.json && mv tmp.json package.json
+          # Update package name to agent-core
+          jq '.name = "agent-core"' package.json > tmp.json && mv tmp.json package.json
           
-          # Update optionalDependencies to use oh-my-openagent naming
+          # Update optionalDependencies to use agent-core naming
           jq '.optionalDependencies = {
-            "oh-my-openagent-darwin-arm64": "${{ steps.version.outputs.version }}",
-            "oh-my-openagent-darwin-x64": "${{ steps.version.outputs.version }}",
-            "oh-my-openagent-darwin-x64-baseline": "${{ steps.version.outputs.version }}",
-            "oh-my-openagent-linux-arm64": "${{ steps.version.outputs.version }}",
-            "oh-my-openagent-linux-arm64-musl": "${{ steps.version.outputs.version }}",
-            "oh-my-openagent-linux-x64": "${{ steps.version.outputs.version }}",
-            "oh-my-openagent-linux-x64-baseline": "${{ steps.version.outputs.version }}",
-            "oh-my-openagent-linux-x64-musl": "${{ steps.version.outputs.version }}",
-            "oh-my-openagent-linux-x64-musl-baseline": "${{ steps.version.outputs.version }}",
-            "oh-my-openagent-windows-x64": "${{ steps.version.outputs.version }}",
-            "oh-my-openagent-windows-x64-baseline": "${{ steps.version.outputs.version }}"
+            "agent-core-darwin-arm64": "${{ steps.version.outputs.version }}",
+            "agent-core-darwin-x64": "${{ steps.version.outputs.version }}",
+            "agent-core-darwin-x64-baseline": "${{ steps.version.outputs.version }}",
+            "agent-core-linux-arm64": "${{ steps.version.outputs.version }}",
+            "agent-core-linux-arm64-musl": "${{ steps.version.outputs.version }}",
+            "agent-core-linux-x64": "${{ steps.version.outputs.version }}",
+            "agent-core-linux-x64-baseline": "${{ steps.version.outputs.version }}",
+            "agent-core-linux-x64-musl": "${{ steps.version.outputs.version }}",
+            "agent-core-linux-x64-musl-baseline": "${{ steps.version.outputs.version }}",
+            "agent-core-windows-x64": "${{ steps.version.outputs.version }}",
+            "agent-core-windows-x64-baseline": "${{ steps.version.outputs.version }}"
           }' package.json > tmp.json && mv tmp.json package.json
           
           TAG_ARG=""
           if [ -n "${{ steps.version.outputs.dist_tag }}" ]; then
             TAG_ARG="--tag ${{ steps.version.outputs.dist_tag }}"
           fi
-          npm publish --access public --provenance $TAG_ARG || echo "oh-my-openagent publish may have failed (package may already exist)"
+          npm publish --access public --provenance $TAG_ARG || echo "agent-core publish may have failed (package may already exist)"
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}
           NPM_CONFIG_PROVENANCE: true
@@ -248,7 +248,7 @@ jobs:
         if: steps.check.outputs.skip != 'true'
         run: |
           # Restore original package name
-          jq '.name = "oh-my-opencode"' package.json > tmp.json && mv tmp.json package.json
+          jq '.name = "agent-core"' package.json > tmp.json && mv tmp.json package.json
 
   trigger-platform:
     runs-on: ubuntu-latest
