@@ -122,9 +122,11 @@ Configuration uses JSONC (JSON with comments) at project or user level:
 
 | Location | Path |
 |----------|------|
-| Project | `.opencode/oh-my-opencode.jsonc` |
-| User (macOS/Linux) | `~/.config/opencode/oh-my-opencode.jsonc` |
-| User (Windows) | `%APPDATA%\opencode\oh-my-opencode.jsonc` |
+| Project | `.opencode/agent-core.jsonc` |
+| User (macOS/Linux) | `~/.config/opencode/agent-core.jsonc` |
+| User (Windows) | `%APPDATA%\opencode\agent-core.jsonc` |
+
+> Note: `oh-my-opencode.jsonc` is still supported as a fallback.
 
 See the [Configuration Reference](docs/reference/configuration.md) for all available options.
 
