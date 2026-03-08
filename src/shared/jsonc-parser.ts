@@ -64,3 +64,31 @@ export function detectConfigFile(basePath: string): {
   }
   return { format: "none", path: jsonPath }
 }
+
+export interface DetectConfigWithFallbackResult {
+  format: "json" | "jsonc" | "none"
+  path: string
+  isLegacy: boolean
+}
+
+export function detectAgentCoreConfigFile(
+  primaryBasePath: string,
+  legacyBasePath: string,
+  onLegacyDetected?: (path: string) => void
+): DetectConfigWithFallbackResult {
+  // Check primary (agent-core) first
+  const primaryResult = detectConfigFile(primaryBasePath)
+  if (primaryResult.format !== "none") {
+    return { ...primaryResult, isLegacy: false }
+  }
+
+  // Fall back to legacy (oh-my-opencode)
+  const legacyResult = detectConfigFile(legacyBasePath)
+  if (legacyResult.format !== "none") {
+    onLegacyDetected?.(legacyResult.path)
+    return { ...legacyResult, isLegacy: true }
+  }
+
+  // Return default path (primary) if neither exists
+  return { ...primaryResult, isLegacy: false }
+}

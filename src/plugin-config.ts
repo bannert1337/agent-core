@@ -7,7 +7,7 @@ import {
   getOpenCodeConfigDir,
   addConfigLoadError,
   parseJsonc,
-  detectConfigFile,
+  detectAgentCoreConfigFile,
   migrateConfigFile,
 } from "./shared";
 
@@ -137,22 +137,36 @@ export function loadPluginConfig(
   directory: string,
   ctx: unknown
 ): OhMyOpenCodeConfig {
-  // User-level config path - prefer .jsonc over .json
+  // User-level config path - prefer agent-core over oh-my-opencode
   const configDir = getOpenCodeConfigDir({ binary: "opencode" });
-  const userBasePath = path.join(configDir, "oh-my-opencode");
-  const userDetected = detectConfigFile(userBasePath);
+  const userBasePathNew = path.join(configDir, "agent-core");
+  const userBasePathLegacy = path.join(configDir, "oh-my-opencode");
+  const userDetected = detectAgentCoreConfigFile(
+    userBasePathNew,
+    userBasePathLegacy,
+    (legacyPath) => {
+      log(`Deprecation: Using legacy config file at ${legacyPath}. Please rename to agent-core.jsonc`);
+    }
+  );
   const userConfigPath =
     userDetected.format !== "none"
       ? userDetected.path
-      : userBasePath + ".json";
+      : userBasePathNew + ".json";
 
-  // Project-level config path - prefer .jsonc over .json
-  const projectBasePath = path.join(directory, ".opencode", "oh-my-opencode");
-  const projectDetected = detectConfigFile(projectBasePath);
+  // Project-level config path - prefer agent-core over oh-my-opencode
+  const projectBasePathNew = path.join(directory, ".opencode", "agent-core");
+  const projectBasePathLegacy = path.join(directory, ".opencode", "oh-my-opencode");
+  const projectDetected = detectAgentCoreConfigFile(
+    projectBasePathNew,
+    projectBasePathLegacy,
+    (legacyPath) => {
+      log(`Deprecation: Using legacy config file at ${legacyPath}. Please rename to agent-core.jsonc`);
+    }
+  );
   const projectConfigPath =
     projectDetected.format !== "none"
       ? projectDetected.path
-      : projectBasePath + ".json";
+      : projectBasePathNew + ".json";
 
   // Load user config first (base)
   let config: OhMyOpenCodeConfig =
