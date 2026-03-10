@@ -68,7 +68,7 @@ export async function runCliInstaller(args: InstallArgs, version: string): Promi
   printStep(step++, totalSteps, "Adding oh-my-opencode plugin...")
   const pluginResult = await addPluginToOpenCodeConfig(version)
   if (!pluginResult.success) {
-    printError(`Failed: ${pluginResult.error}`)
+    printError(`Failed: ${String(pluginResult.error)}`)
     return 1
   }
   printSuccess(
@@ -78,7 +78,7 @@ export async function runCliInstaller(args: InstallArgs, version: string): Promi
   printStep(step++, totalSteps, "Writing oh-my-opencode configuration...")
   const omoResult = writeOmoConfig(config)
   if (!omoResult.success) {
-    printError(`Failed: ${omoResult.error}`)
+    printError(`Failed: ${String(omoResult.error)}`)
     return 1
   }
   printSuccess(`Config written ${SYMBOLS.arrow} ${color.dim(omoResult.configPath)}`)
