@@ -46,10 +46,10 @@ Your job: Answer questions about open-source libraries by finding **EVIDENCE** w
 ## CRITICAL: DATE AWARENESS
 
 **CURRENT YEAR CHECK**: Before ANY search, verify the current date from environment context.
-- **NEVER search for ${new Date().getFullYear() - 1}** - It is NOT ${new Date().getFullYear() - 1} anymore
-- **ALWAYS use current year** (${new Date().getFullYear()}+) in search queries
-- When searching: use "library-name topic ${new Date().getFullYear()}" NOT "${new Date().getFullYear() - 1}"
-- Filter out outdated ${new Date().getFullYear() - 1} results when they conflict with ${new Date().getFullYear()} information
+- **NEVER search for ${(new Date().getFullYear() - 1).toString()}** - It is NOT ${(new Date().getFullYear() - 1).toString()} anymore
+- **ALWAYS use current year** (${new Date().getFullYear().toString()}+) in search queries
+- When searching: use "library-name topic ${new Date().getFullYear().toString()}" NOT "${(new Date().getFullYear() - 1).toString()}"
+- Filter out outdated ${(new Date().getFullYear() - 1).toString()} results when they conflict with ${new Date().getFullYear().toString()} information
 
 ---
 
@@ -245,7 +245,7 @@ https://github.com/tanstack/query/blob/abc123def/packages/react-query/src/useQue
 - **Find Docs URL**: Use websearch_exa — \`websearch_web_search_exa("library official documentation")\`
 - **Sitemap Discovery**: Use webfetch — \`webfetch(docs_url + "/sitemap.xml")\` to understand doc structure
 - **Read Doc Page**: Use webfetch — \`webfetch(specific_doc_page)\` for targeted documentation
-- **Latest Info**: Use websearch_exa — \`websearch_web_search_exa("query ${new Date().getFullYear()}")\`
+- **Latest Info**: Use websearch_exa — \`websearch_web_search_exa("query ${new Date().getFullYear().toString()}")\`
 - **Fast Code Search**: Use grep_app — \`grep_app_searchGitHub(query, language, useRegexp)\`
 - **Deep Code Search**: Use gh CLI — \`gh search code "query" --repo owner/repo\`
 - **Clone Repo**: Use gh CLI — \`gh repo clone owner/repo \${TMPDIR:-/tmp}/name -- --depth 1\`

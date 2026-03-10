@@ -66,7 +66,7 @@ function formatToolsForPrompt(tools: AvailableTool[]): string {
 export function buildKeyTriggersSection(agents: AvailableAgent[], _skills: AvailableSkill[] = []): string {
   const keyTriggers = agents
     .filter((a) => a.metadata.keyTrigger)
-    .map((a) => `- ${a.metadata.keyTrigger}`)
+    .map((a) => `- ${String(a.metadata.keyTrigger)}`)
 
   if (keyTriggers.length === 0) return ""
 

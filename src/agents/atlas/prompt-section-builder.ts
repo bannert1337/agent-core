@@ -36,7 +36,7 @@ export function buildCategorySection(userCategories?: Record<string, CategoryCon
   const categoryRows = Object.entries(allCategories).map(([name, config]) => {
     const temp = config.temperature ?? 0.5
     const desc = getCategoryDescription(name, userCategories)
-    return `- **\`${name}\`** (${temp}): ${desc}`
+    return `- **\`${name}\`** (${temp.toString()}): ${desc}`
   })
 
   return `##### Option A: Use CATEGORY (for domain-specific work)
@@ -62,8 +62,8 @@ export function buildSkillsSection(skills: AvailableSkill[]): string {
 #### 3.2.2: Skill Selection (PREPEND TO PROMPT)
 
 **Use the \`Category + Skills Delegation System\` section below as the single source of truth for skill details.**
-- Built-in skills available: ${builtinSkills.length}
-- User-installed skills available: ${customSkills.length}
+- Built-in skills available: ${builtinSkills.length.toString()}
+- User-installed skills available: ${customSkills.length.toString()}
 
 **MANDATORY: Evaluate ALL skills (built-in AND user-installed) for relevance to your task.**
 
