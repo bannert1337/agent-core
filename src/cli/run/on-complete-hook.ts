@@ -34,7 +34,7 @@ export async function executeOnCompleteHook(options: {
 
     if (hookExitCode !== 0) {
       console.error(
-        pc.yellow(`Warning: on-complete hook exited with code ${hookExitCode}`)
+        pc.yellow(`Warning: on-complete hook exited with code ${hookExitCode.toString()}`)
       )
     }
   } catch (error) {

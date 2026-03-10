@@ -74,7 +74,7 @@ function colorizeWithProfileColor(text: string, hexColor?: string): string {
   if (!rgb) return pc.magenta(text)
 
   const [r, g, b] = rgb
-  return `\u001b[38;2;${r};${g};${b}m${text}\u001b[39m`
+  return `\u001b[38;2;${r.toString()};${g.toString()};${b.toString()}m${text}\u001b[39m`
 }
 
 function parseHexColor(hexColor: string): [number, number, number] | null {
