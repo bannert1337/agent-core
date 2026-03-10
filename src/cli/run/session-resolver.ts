@@ -37,13 +37,13 @@ export async function resolveSession(options: {
 
     if (res.error) {
       console.error(
-        pc.yellow(`Session create attempt ${attempt}/${SESSION_CREATE_MAX_RETRIES} failed:`)
+        pc.yellow(`Session create attempt ${attempt.toString()}/${SESSION_CREATE_MAX_RETRIES.toString()} failed:`)
       )
       console.error(pc.dim(`  Error: ${serializeError(res.error)}`))
 
       if (attempt < SESSION_CREATE_MAX_RETRIES) {
         const delay = SESSION_CREATE_RETRY_DELAY_MS * attempt
-        console.log(pc.dim(`  Retrying in ${delay}ms...`))
+        console.log(pc.dim(`  Retrying in ${delay.toString()}ms...`))
         await new Promise((resolve) => setTimeout(resolve, delay))
       }
       continue
@@ -55,13 +55,13 @@ export async function resolveSession(options: {
 
     console.error(
       pc.yellow(
-        `Session create attempt ${attempt}/${SESSION_CREATE_MAX_RETRIES}: No session ID returned`
+        `Session create attempt ${attempt.toString()}/${SESSION_CREATE_MAX_RETRIES.toString()}: No session ID returned`
       )
     )
 
     if (attempt < SESSION_CREATE_MAX_RETRIES) {
       const delay = SESSION_CREATE_RETRY_DELAY_MS * attempt
-      console.log(pc.dim(`  Retrying in ${delay}ms...`))
+      console.log(pc.dim(`  Retrying in ${delay.toString()}ms...`))
       await new Promise((resolve) => setTimeout(resolve, delay))
     }
   }
