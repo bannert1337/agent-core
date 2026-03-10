@@ -55,7 +55,7 @@ export async function pollForCompletion(
       errorCycleCount++
       if (errorCycleCount >= ERROR_GRACE_CYCLES) {
         console.error(
-          pc.red(`\n\nSession ended with error: ${eventState.lastError}`)
+          pc.red(`\n\nSession ended with error: ${eventState.lastError ?? ""}`)
         )
         console.error(
           pc.yellow("Check if todos were completed before the error.")
@@ -79,7 +79,7 @@ export async function pollForCompletion(
           pc.yellow(
             `\n  No events for ${Math.round(
               timeSinceLastEvent / 1000
-            )}s, verifying session status...`
+            ).toString()}s, verifying session status...`
           )
         )
 
@@ -160,7 +160,7 @@ export async function pollForCompletion(
             pc.yellow(
               `\n  No meaningful work events for ${Math.round(
                 secondaryMeaningfulWorkTimeoutMs / 1000
-              )}s but session has active work - assuming in progress`
+              ).toString()}s but session has active work - assuming in progress`
             )
           )
         }
