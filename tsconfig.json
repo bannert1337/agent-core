@@ -1,20 +1,48 @@
 {
   "compilerOptions": {
+    /* Environment & Resolution (Preserved for Bun) */
     "target": "ESNext",
     "module": "ESNext",
     "moduleResolution": "bundler",
+    "lib": [
+      "ESNext"
+    ],
+    "types": [
+      "bun-types"
+    ],
+    "resolveJsonModule": true,
+    /* Output Configuration (Preserved for library distribution) */
     "declaration": true,
     "declarationDir": "dist",
     "outDir": "dist",
     "rootDir": "src",
-    "strict": true,
     "esModuleInterop": true,
-    "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "resolveJsonModule": true,
-    "lib": ["ESNext"],
-    "types": ["bun-types"]
+    "skipLibCheck": true,
+    /* Strict Type-Checking: The Vibe-Coding Killers */
+    "strict": true,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "strictFunctionTypes": true,
+    "strictBindCallApply": true,
+    "strictPropertyInitialization": true,
+    "noImplicitThis": true,
+    "alwaysStrict": true,
+    /* Code Quality & Logic Enforcement (The New Additions) */
+    "noUnusedLocals": true, /* Fails on leftover/dead variables */
+    "noUnusedParameters": true, /* Fails on unused function arguments */
+    "noImplicitReturns": true, /* Forces explicit returns in all branches */
+    "noFallthroughCasesInSwitch": true, /* Prevents accidental switch statement bleeding */
+    "exactOptionalPropertyTypes": true, /* Enforces strict handling of optional properties */
+    "noImplicitOverride": true /* Forces explicit 'override' keyword in classes */
   },
-  "include": ["src/**/*"],
-  "exclude": ["node_modules", "dist", "**/*.test.ts", "script"]
+  "include": [
+    "src/**/*"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "**/*.test.ts",
+    "script"
+  ]
 }
