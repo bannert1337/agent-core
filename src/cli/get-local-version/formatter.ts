@@ -44,7 +44,7 @@ export function formatVersionOutput(info: VersionInfo): string {
       lines.push(`  ${color.dim("Using file:// protocol from config")}`)
       break
     case "pinned":
-      lines.push(`  ${SYMBOLS.pin} ${color.magenta(`Version pinned to ${info.pinnedVersion}`)}`)
+      lines.push(`  ${SYMBOLS.pin} ${color.magenta(`Version pinned to ${String(info.pinnedVersion)}`)}`)
       lines.push(`  ${color.dim("Update check skipped for pinned versions")}`)
       break
     case "error":
