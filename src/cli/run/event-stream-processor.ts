@@ -48,7 +48,7 @@ export async function processEvents(
       handleToolResult(ctx, payload, state)
       handleTuiToast(ctx, payload, state)
     } catch (err) {
-      console.error(pc.red(`[event error] ${err}`))
+      console.error(pc.red(`[event error] ${String(err)}`))
     }
   }
 }

@@ -52,11 +52,11 @@ export function serializeError(error: unknown): string {
     }
   }
 
-  return String(error)
+  return String(error as { toString(): string })
 }
 
 function getSessionTag(ctx: RunContext, payload: EventPayload): string {
-  const props = payload.properties as Record<string, unknown> | undefined
+  const props = payload.properties
   const info = props?.info as Record<string, unknown> | undefined
   const part = props?.part as Record<string, unknown> | undefined
   const sessionID =
@@ -65,13 +65,14 @@ function getSessionTag(ctx: RunContext, payload: EventPayload): string {
     part?.sessionID ?? part?.sessionId
   const isMainSession = sessionID === ctx.sessionID
   if (isMainSession) return pc.green("[MAIN]")
-  if (sessionID) return pc.yellow(`[${String(sessionID).slice(0, 8)}]`)
+  const sessionIDStr = String(sessionID as { toString(): string })
+  if (sessionID) return pc.yellow(`[${sessionIDStr.slice(0, 8)}]`)
   return pc.dim("[system]")
 }
 
 export function logEventVerbose(ctx: RunContext, payload: EventPayload): void {
   const sessionTag = getSessionTag(ctx, payload)
-  const props = payload.properties as Record<string, unknown> | undefined
+  const props = payload.properties
 
   switch (payload.type) {
     case "session.idle":
@@ -122,7 +123,7 @@ export function logEventVerbose(ctx: RunContext, payload: EventPayload): void {
         inputStr = JSON.stringify(input)
       } catch {
         try {
-          inputStr = String(input)
+          inputStr = String(input as { toString(): string })
         } catch {
           inputStr = "[unserializable]"
         }
