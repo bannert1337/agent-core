@@ -25,7 +25,7 @@ export async function runBunInstallWithDetails(): Promise<BunInstallResult> {
 
     let timeoutId: ReturnType<typeof setTimeout>
     const timeoutPromise = new Promise<"timeout">((resolve) => {
-      timeoutId = setTimeout(() => resolve("timeout"), BUN_INSTALL_TIMEOUT_MS)
+      timeoutId = setTimeout(() => { resolve("timeout"); }, BUN_INSTALL_TIMEOUT_MS)
     })
     const exitPromise = proc.exited.then(() => "completed" as const)
     const result = await Promise.race([exitPromise, timeoutPromise])
@@ -40,14 +40,14 @@ export async function runBunInstallWithDetails(): Promise<BunInstallResult> {
       return {
         success: false,
         timedOut: true,
-        error: `bun install timed out after ${BUN_INSTALL_TIMEOUT_SECONDS} seconds. Try running manually: cd ${getConfigDir()} && bun i`,
+        error: `bun install timed out after ${BUN_INSTALL_TIMEOUT_SECONDS.toString()} seconds. Try running manually: cd ${getConfigDir()} && bun i`,
       }
     }
 
     if (proc.exitCode !== 0) {
       return {
         success: false,
-        error: `bun install failed with exit code ${proc.exitCode}`,
+        error: `bun install failed with exit code ${String(proc.exitCode)}`,
       }
     }
 
