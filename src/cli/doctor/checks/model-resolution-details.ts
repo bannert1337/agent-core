@@ -15,11 +15,11 @@ export function buildModelResolutionDetails(options: {
   details.push("═══ Available Models (from cache) ═══")
   details.push("")
   if (options.available.cacheExists) {
-    details.push(`  Providers in cache: ${options.available.providers.length}`)
+    details.push(`  Providers in cache: ${options.available.providers.length.toString()}`)
     details.push(
       `  Sample: ${options.available.providers.slice(0, 6).join(", ")}${options.available.providers.length > 6 ? "..." : ""}`
     )
-    details.push(`  Total models: ${options.available.modelCount}`)
+    details.push(`  Total models: ${options.available.modelCount.toString()}`)
     details.push(`  Cache: ${cacheFile}`)
     details.push(`  ℹ Runtime: only connected providers used`)
     details.push(`  Refresh: opencode models --refresh`)

@@ -82,7 +82,7 @@ export async function checkModels(): Promise<CheckResult> {
   return {
     name: CHECK_NAMES[CHECK_IDS.MODELS],
     status: issues.length > 0 ? "warn" : "pass",
-    message: `${info.agents.length} agents, ${info.categories.length} categories, ${overrideCount} override${overrideCount === 1 ? "" : "s"}`,
+    message: `${info.agents.length.toString()} agents, ${info.categories.length.toString()} categories, ${overrideCount.toString()} override${overrideCount === 1 ? "" : "s"}`,
     details: buildModelResolutionDetails({ info, available, config }),
     issues,
   }

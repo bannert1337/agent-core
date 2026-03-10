@@ -78,7 +78,7 @@ function collectModelResolutionIssues(config: OmoConfig): DoctorIssue[] {
   for (const invalidAgent of invalidAgentOverrides) {
     issues.push({
       title: `Invalid agent override: ${invalidAgent.name}`,
-      description: `Override '${invalidAgent.userOverride}' must be in provider/model format.`,
+      description: `Override '${String(invalidAgent.userOverride)}' must be in provider/model format.`,
       severity: "warning",
       affects: [invalidAgent.name],
     })
@@ -87,7 +87,7 @@ function collectModelResolutionIssues(config: OmoConfig): DoctorIssue[] {
   for (const invalidCategory of invalidCategoryOverrides) {
     issues.push({
       title: `Invalid category override: ${invalidCategory.name}`,
-      description: `Override '${invalidCategory.userOverride}' must be in provider/model format.`,
+      description: `Override '${String(invalidCategory.userOverride)}' must be in provider/model format.`,
       severity: "warning",
       affects: [invalidCategory.name],
     })
@@ -144,7 +144,7 @@ export async function checkConfig(): Promise<CheckResult> {
     return {
       name: CHECK_NAMES[CHECK_IDS.CONFIG],
       status: "fail",
-      message: `Configuration invalid (${issues.length} issue${issues.length > 1 ? "s" : ""})`,
+      message: `Configuration invalid (${issues.length.toString()} issue${issues.length > 1 ? "s" : ""})`,
       details: validation.path ? [`Path: ${validation.path}`] : undefined,
       issues,
     }
@@ -157,7 +157,7 @@ export async function checkConfig(): Promise<CheckResult> {
   return {
     name: CHECK_NAMES[CHECK_IDS.CONFIG],
     status: issues.length > 0 ? "warn" : "pass",
-    message: issues.length > 0 ? `${issues.length} configuration warning(s)` : "Configuration is valid",
+    message: issues.length > 0 ? `${issues.length.toString()} configuration warning(s)` : "Configuration is valid",
     details: validation.path ? [`Path: ${validation.path}`] : undefined,
     issues,
   }
