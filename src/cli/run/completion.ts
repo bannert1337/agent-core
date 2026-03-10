@@ -30,7 +30,7 @@ export async function checkCompletionConditions(ctx: RunContext): Promise<boolea
 
     return true
   } catch (err) {
-    console.error(pc.red(`[completion] API error: ${err}`))
+    console.error(pc.red(`[completion] API error: ${String(err)}`))
     return false
   }
 }
@@ -64,7 +64,7 @@ async function areAllTodosComplete(ctx: RunContext): Promise<boolean> {
   )
 
   if (incompleteTodos.length > 0) {
-    logWaiting(ctx, `${incompleteTodos.length} todos remaining`)
+    logWaiting(ctx, `${incompleteTodos.length.toString()} todos remaining`)
     return false
   }
 
