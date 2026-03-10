@@ -59,7 +59,7 @@ export function printHeader(isUpdate: boolean): void {
 }
 
 export function printStep(step: number, total: number, message: string): void {
-  const progress = color.dim(`[${step}/${total}]`)
+  const progress = color.dim(`[${step.toString()}/${total.toString()}]`)
   console.log(`${progress} ${message}`)
 }
 
