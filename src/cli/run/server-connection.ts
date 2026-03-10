@@ -9,7 +9,7 @@ function isPortStartFailure(error: unknown, port: number): boolean {
     return false
   }
 
-  return error.message.includes(`Failed to start server on port ${port}`)
+  return error.message.includes(`Failed to start server on port ${port.toString()}`)
 }
 
 function isPortRangeExhausted(error: unknown): boolean {
@@ -27,7 +27,7 @@ async function startServer(options: { signal: AbortSignal, port: number }): Prom
   )
 
   console.log(pc.dim("Server listening at"), pc.cyan(server.url))
-  return { client, cleanup: () => server.close() }
+  return { client, cleanup: () => { server.close(); } }
 }
 
 export async function createServerConnection(options: {
@@ -65,13 +65,13 @@ export async function createServerConnection(options: {
         }
 
         console.log(pc.dim("Port"), pc.cyan(port.toString()), pc.dim("became occupied, attaching to existing server"))
-        const client = createOpencodeClient({ baseUrl: `http://127.0.0.1:${port}` })
+        const client = createOpencodeClient({ baseUrl: `http://127.0.0.1:${port.toString()}` })
         return { client, cleanup: () => {} }
       }
     }
 
     console.log(pc.dim("Port"), pc.cyan(port.toString()), pc.dim("is occupied, attaching to existing server"))
-    const client = createOpencodeClient({ baseUrl: `http://127.0.0.1:${port}` })
+    const client = createOpencodeClient({ baseUrl: `http://127.0.0.1:${port.toString()}` })
     return { client, cleanup: () => {} }
   }
 
@@ -92,7 +92,7 @@ export async function createServerConnection(options: {
     }
 
     console.log(pc.dim("Port range exhausted, attaching to existing server on"), pc.cyan(DEFAULT_SERVER_PORT.toString()))
-    const client = createOpencodeClient({ baseUrl: `http://127.0.0.1:${DEFAULT_SERVER_PORT}` })
+    const client = createOpencodeClient({ baseUrl: `http://127.0.0.1:${DEFAULT_SERVER_PORT.toString()}` })
     return { client, cleanup: () => {} }
   }
 
