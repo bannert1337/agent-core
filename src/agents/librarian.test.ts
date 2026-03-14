@@ -105,27 +105,27 @@ describe("createLibrarianAgent", () => {
 
 describe("LIBRARIAN_PROMPT_METADATA", () => {
   test("#then has correct category and cost", () => {
-    expect(LIBRARY_PROMPT_METADATA.category).toBe("exploration")
-    expect(LIBRARY_PROMPT_METADATA.cost).toBe("CHEAP")
-    expect(LIBRARY_PROMPT_METADATA.promptAlias).toBe("Librarian")
+    expect(LIBRARIAN_PROMPT_METADATA.category).toBe("exploration")
+    expect(LIBRARIAN_PROMPT_METADATA.cost).toBe("CHEAP")
+    expect(LIBRARIAN_PROMPT_METADATA.promptAlias).toBe("Librarian")
   })
 
   test("#then has keyTrigger for external library detection", () => {
-    expect(LIBRARY_PROMPT_METADATA.keyTrigger).toBeDefined()
-    expect(LIBRARY_PROMPT_METADATA.keyTrigger).toContain("External library")
-    expect(LIBRARY_PROMPT_METADATA.keyTrigger).toContain("librarian")
+    expect(LIBRARIAN_PROMPT_METADATA.keyTrigger).toBeDefined()
+    expect(LIBRARIAN_PROMPT_METADATA.keyTrigger).toContain("External library")
+    expect(LIBRARIAN_PROMPT_METADATA.keyTrigger).toContain("librarian")
   })
 
   test("#then has triggers for codebase exploration", () => {
-    expect(LIBRARY_PROMPT_METADATA.triggers).toBeDefined()
-    expect(LIBRARY_PROMPT_METADATA.triggers!.length).toBeGreaterThan(0)
-    expect(LIBRARY_PROMPT_METADATA.triggers!.some(t => t.domain === "Librarian")).toBe(true)
+    expect(LIBRARIAN_PROMPT_METADATA.triggers).toBeDefined()
+    expect(LIBRARIAN_PROMPT_METADATA.triggers!.length).toBeGreaterThan(0)
+    expect(LIBRARIAN_PROMPT_METADATA.triggers!.some(t => t.domain === "Librarian")).toBe(true)
   })
 
   test("#then has useWhen guidance for library questions", () => {
-    expect(LIBRARY_PROMPT_METADATA.useWhen).toBeDefined()
-    expect(LIBRARY_PROMPT_METADATA.useWhen!.length).toBeGreaterThan(0)
-    expect(LIBRARY_PROMPT_METADATA.useWhen!.some(u => u.includes("library"))).toBe(true)
+    expect(LIBRARIAN_PROMPT_METADATA.useWhen).toBeDefined()
+    expect(LIBRARIAN_PROMPT_METADATA.useWhen!.length).toBeGreaterThan(0)
+    expect(LIBRARIAN_PROMPT_METADATA.useWhen!.some(u => u.includes("library"))).toBe(true)
   })
 })
 
