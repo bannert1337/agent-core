@@ -53,15 +53,18 @@ Each agent is tuned to specific model strengths with automatic fallback chains.
 ### Development Tools
 
 **LSP Integration**
+
 - Workspace-wide rename, goto definition, find references
 - Pre-build diagnostics via `lsp_diagnostics`
 - IDE-level precision for agent-driven refactoring
 
 **AST-Grep**
+
 - Pattern-aware code search across 25 languages
 - AST-aware rewrites with `ast_grep_replace`
 
 **Tmux Integration**
+
 - Full interactive terminal for REPLs, debuggers, and TUIs
 - Background agents spawn in separate tmux panes
 - Persistent sessions for long-running tasks
