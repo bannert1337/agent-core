@@ -33,7 +33,7 @@ describe("pollSyncSession", () => {
       //         and the assistant id > user id (native opencode condition)
       const { pollSyncSession } = require("./sync-session-poller")
 
-      let pollCount = 0
+      const pollCount = 0
       const mockClient = {
         session: {
           messages: async () => ({
